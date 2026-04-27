@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-const customerLayout = () => {
+const CustomerLayout = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* <navbar /> */}
@@ -11,4 +11,4 @@ const customerLayout = () => {
   );
 };
 
-export default customerLayout;
+export default CustomerLayout;
