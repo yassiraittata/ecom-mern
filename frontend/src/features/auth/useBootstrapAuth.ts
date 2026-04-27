@@ -1,11 +1,19 @@
 import { useAuth } from "@clerk/react";
 import { useAuthStore } from "./store";
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import { getUser, syncUser } from "./api";
+import { setApiTokenGetter } from "@/lib/api";
 
 export function useBootstrapAuth() {
   const { isLoaded, isSignedIn, getToken } = useAuth();
   const { setLoading, setUser, clearAuth, setError } = useAuthStore();
+
+  useEffect(() => {
+    setApiTokenGetter(async () => {
+      const token = await getToken();
+      return token || null;
+    });
+  }, [getToken]);
 
   useEffect(() => {
     async function run() {
