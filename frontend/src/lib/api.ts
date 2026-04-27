@@ -1,0 +1,58 @@
+import axios, { type AxiosRequestConfig } from "axios";
+import type { ApiEnvelop } from "./types";
+
+let tokenGetter: (() => Promise<string | null>) | null = null;
+
+export function setApiTokenGetter(getter: () => Promise<string | null>) {
+  tokenGetter = getter;
+}
+
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  withCredentials: false,
+});
+
+api.interceptors.request.use(async (config) => {
+  if (!tokenGetter) return config;
+
+  const token = await tokenGetter();
+
+  if (token) {
+    config.headers = config.headers || {};
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
+
+function getErrorMessage(error: unknown) {
+  if (axios.isAxiosError(error)) {
+    return (
+      error.response?.data?.errors?.[0]?.message ||
+      error.message ||
+      "An error occurred"
+    );
+  }
+
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return "Something went wrong!";
+}
+
+export async function apiGet<T>(url: string, config?: AxiosRequestConfig) {
+  try {
+    const response = await api.get<ApiEnvelop<T>>(url, config);
+    if (response.data.status === "error") {
+      throw new Error(response.data.errors?.[0].message || "An error occurred");
+    }
+    return response.data.data;
+  } catch (error) {
+    console.error("API GET Error:", error);
+    throw new Error(getErrorMessage(error), { cause: error });
+  }
+}

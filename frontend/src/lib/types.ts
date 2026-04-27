@@ -1,0 +1,21 @@
+export type UserRole = "user" | "admin";
+
+export type AppUser = {
+  id: string;
+  clerkUserId: string;
+  email?: string;
+  name?: string;
+  role: UserRole;
+};
+
+export type ApiErrorItem = {
+  message: string;
+  code?: string;
+};
+
+export type ApiEnvelop<T> = {
+  status: "success" | "error";
+  data: T;
+  meta?: Record<string, unknown>;
+  errors?: ApiErrorItem[];
+};
