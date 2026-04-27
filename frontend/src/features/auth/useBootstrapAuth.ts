@@ -1,6 +1,6 @@
 import { useAuth } from "@clerk/react";
 import { useAuthStore } from "./store";
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 import { getUser, syncUser } from "./api";
 import { setApiTokenGetter } from "@/lib/api";
 
