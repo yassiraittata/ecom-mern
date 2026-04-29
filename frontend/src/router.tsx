@@ -5,6 +5,8 @@ import StoreHome from "./pages/customer/Home";
 import PublicLayout from "./components/auth/PublicLayout";
 import SigninPage from "./pages/auth/SigninPage";
 import SignupPage from "./pages/auth/SignupPage";
+import ProtectedLayout from "./components/auth/ProtectedLayout";
+import ProfilePage from "./pages/customer/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +25,15 @@ export const router = createBrowserRouter([
             element: <SigninPage />,
           },
           { path: "signup/*", element: <SignupPage /> },
+        ],
+      },
+      {
+        element: <ProtectedLayout />,
+        children: [
+          {
+            path: "profile/*",
+            element: <ProfilePage />,
+          },
         ],
       },
     ],
