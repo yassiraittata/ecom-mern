@@ -1,6 +1,6 @@
 import { SignUp } from "@clerk/react";
 
-const signup = () => {
+const SignupPage = () => {
   return (
     <div className="flex min-h-[70vh] items-center justify-center">
       <SignUp />
@@ -8,4 +8,4 @@ const signup = () => {
   );
 };
 
-export default signup;
+export default SignupPage;
