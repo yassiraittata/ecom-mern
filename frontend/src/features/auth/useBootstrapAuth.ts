@@ -18,7 +18,7 @@ export function useBootstrapAuth() {
   useEffect(() => {
     async function run() {
       if (!isLoaded) return;
-
+      
       if (!isSignedIn) {
         clearAuth();
         return;
