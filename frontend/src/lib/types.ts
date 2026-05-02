@@ -15,7 +15,7 @@ export type ApiErrorItem = {
 
 export type ApiEnvelop<T> = {
   status: "success" | "error";
-  data: T;
+  data: T | null;
   meta?: Record<string, unknown>;
   errors?: ApiErrorItem[];
 };

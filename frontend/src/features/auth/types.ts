@@ -1,10 +1,10 @@
 import type { AppUser } from "@/lib/types";
 
-export type userResponse = {
+export type UserResponse = {
   user: AppUser;
 };
 
-export type syncResponse = {
+export type SyncResponse = {
   user: AppUser;
 };
 

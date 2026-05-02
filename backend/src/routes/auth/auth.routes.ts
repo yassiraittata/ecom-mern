@@ -21,7 +21,7 @@ router.post(
 
     const clerkUser = await clerkClient.users.getUser(userId);
 
-    const extractEmail =
+    const extractEmail =  
       clerkUser.emailAddresses.find(
         (email) => email.id === clerkUser.primaryEmailAddressId,
       ) || clerkUser.emailAddresses[0];

@@ -1,5 +1,6 @@
 import axios, { type AxiosRequestConfig } from "axios";
 import type { ApiEnvelop } from "./types";
+import { env } from "./env";
 
 let tokenGetter: (() => Promise<string | null>) | null = null;
 
@@ -8,7 +9,7 @@ export function setApiTokenGetter(getter: () => Promise<string | null>) {
 }
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000",
+  baseURL: env.backendBaseUrl,
   headers: {
     "Content-Type": "application/json",
   },
@@ -47,7 +48,7 @@ function getErrorMessage(error: unknown) {
 export async function apiGet<T>(url: string, config?: AxiosRequestConfig) {
   try {
     const response = await api.get<ApiEnvelop<T>>(url, config);
-    if (response.data.status === "error") {
+    if (response.data.status === "error" || !response.data.data) {
       throw new Error(response.data.errors?.[0].message || "An error occurred");
     }
     return response.data.data;
